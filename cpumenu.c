@@ -3,7 +3,7 @@
 void main(){
   int ch=1,c;
   while(ch==1){
-    printf("enter the choice\n 1)FCFS 2)sjf 3)priority 4)exit \n");
+    printf("\nenter the choice\n 1)FCFS 2)sjf 3)priority 4)Round Robin 5)exit \n");
     scanf("%d",&c);
     switch(c){
        case 1:{
@@ -150,8 +150,64 @@ void main(){
     break;
  }
  case 4:{
-      exit(0);
-      }
+      int i,limit,tq,total=0,flag=0;
+float avgwt=0,avgtat=0;
+printf("enter the no of process\n");
+scanf("%d",&limit);
+int pid[limit],bt[limit],wt[limit],tat[limit],rt[limit],prt[30],f=1;
+printf("enter the process id and burst time  of process \n");
+for(i=0;i<limit;i++){
+  scanf("%d%d",&pid[i],&bt[i]);
+  rt[i]=bt[i];
+}
+printf("enter the time quantum\n");
+scanf("%d",&tq);
+printf("Gant chart:\n");
+while(flag!=limit){
+ for(i=0;i<limit;i++){
+   if(rt[i]>tq){
+     total+=tq;
+     printf("\tP%d",pid[i]);
+     prt[f]=total;
+     f++;
+     rt[i]=rt[i]-tq;
+    }
+    else if(rt[i]==0){
+    continue;
+    }
+    else{
+     total+=rt[i];
+     rt[i]=0;
+     printf("\tP%d",pid[i]);
+    prt[f]=total;
+     f++;
+     tat[i]=total;
+     wt[i]=total-bt[i];
+      flag++;
+    }
+  }
+}
+printf("\n");
+prt[0]=0;
+for(i=0;i<f;i++)
+printf("    %d\t",prt[i]);
+
+printf("\n\n");
+printf("pid\tBT\tWT\tTAT\t\n");
+for(i=0;i<limit;i++){
+  printf("%d\t%d\t%d\t%d\t\n",pid[i],bt[i],wt[i],tat[i]);
+  avgwt+=wt[i];
+  avgtat+=tat[i];
+  }
+printf("total waiting time=%f\n",avgwt);
+printf("total turn around time=%f\n",avgtat);
+printf("Average WT=%f\n",avgwt/limit);
+printf("Average TAT=%f\n",avgtat/limit);
+break;
+}
+
+ case 5:
+        exit(0);     
   }
 }
 }
