@@ -12,7 +12,7 @@ void main(){
   printf("enter the request sequence\n");
   for(i=0;i<n;i++)
       scanf("%d",&a[i]);
-  printf("enetr the direction 1 for high and 0 for low\n");
+  printf("enter the direction 1 for high and 0 for low\n");
   scanf("%d",&move);
   for(i=0;i<n;i++){
       for(int j=i+1;j<n;j++){
@@ -40,7 +40,7 @@ void main(){
          seektime+=dist;
          printf("Head movement from %d to %d=%d\n",size-1,a[index-1],dist);
          head=a[index-1];
-         for(i=index-1;i>=0;i--){
+         for(i=index-2;i>=0;i--){
          dist=abs(a[i]-head);
          printf("Head movement from %d to %d=%d\n",head,a[i],dist);
          seektime+=dist;
@@ -57,14 +57,18 @@ void main(){
        }
        seektime+=a[0]-0;
         printf("Head movement from %d to %d=%d\n",a[0],0,a[0]);
-        seektime+=size-1;
-        printf("Head movement from %d to %d=%d\n",0,size-1,size-1);
-        head=size-1;
-        for(i=n-1;i>=index;i--){
-            dist=abs(a[i]-head);
-         printf("Head movement from %d to %d=%d\n",head,a[i],dist);
-       seektime+=dist;
-         head=a[i];
+        head=0;
+        if(a[n-1]>a[index]){
+          dist=abs(a[index]-head);
+          seektime+=dist;
+          printf("Head movement from %d to %d=%d\n",head,a[index],dist);
+          head=a[index];
+          for(i=index+1;i<n;i++){
+              dist=abs(a[i]-head);
+              printf("Head movement from %d to %d=%d\n",head,a[i],dist);
+              seektime+=dist;
+              head=a[i];
+           }
          }
      }
    printf("total head movement=%d\n",seektime);
